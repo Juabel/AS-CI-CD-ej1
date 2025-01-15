@@ -1,18 +1,25 @@
 name: examen-workflow
 
-on: push
+on: 
+ push:
+  branches:
+   nueva-caracteristica
 
 jobs:
-  nueva-caracteristica:
-	runs-on: ubuntu-latest
-	steps:
-  	- name: Descargar codigg
-      uses: actions/checkout@v4
-    - name: Configurar entorno python
-      uses: actions/setup-python@v5
-    - name: Instalar pytest
-      uses: pip install pytest
-    - name: Comando 2
-      uses: pytest test.py
-  	- name: Construir imagen
-    	uses: docker/build-push-action@v6
+ test-python:
+  runs-on: ubuntu-latest
+  steps:
+   - name: Descargar codigg
+     uses: actions/checkout@v4
+   - name: Configurar entorno python
+     uses: actions/setup-python@v5
+   - name: Instalar pytest
+     uses: pip install pytest
+   - name: Comando 2
+     uses: pytest test.py
+   - name: Construir imagen
+     uses: docker/build-push-action@v6
+      with:
+       context: .
+       file: Dockerfile
+       push: false
